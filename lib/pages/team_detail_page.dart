@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class TeamDetailPage extends StatefulWidget {
   final Team team;
-  TeamDetailPage({required this.team});
+  const TeamDetailPage({required this.team, super.key});
   @override
   _TeamDetailPageState createState() => _TeamDetailPageState();
 }
@@ -29,10 +29,11 @@ class _TeamDetailPageState extends State<TeamDetailPage> {
 
   void _showPlayerDialog({Player? player}) {
     final isEdit = player != null;
-    if (isEdit)
+    if (isEdit) {
       _nameController.text = player.name;
-    else
+    } else {
       _nameController.clear();
+    }
 
     showDialog(
       context: context,
@@ -49,7 +50,7 @@ class _TeamDetailPageState extends State<TeamDetailPage> {
               final name = _nameController.text.trim();
               if (name.isEmpty) return;
               if (isEdit) {
-                player!..name = name;
+                player.name = name;
                 await _playerService.updatePlayer(player);
               } else {
                 await _playerService
@@ -80,8 +81,8 @@ class _TeamDetailPageState extends State<TeamDetailPage> {
               Navigator.pop(context);
               _load();
             },
-            child: Text('Delete'),
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            child: Text('Delete'),
           ),
         ],
       ),

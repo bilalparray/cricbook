@@ -28,10 +28,11 @@ class _TeamListPageState extends State<TeamListPage> {
 
   void _showDialog({Team? team}) {
     final isEdit = team != null;
-    if (isEdit)
+    if (isEdit) {
       _nameController.text = team.name;
-    else
+    } else {
       _nameController.clear();
+    }
 
     showDialog(
       context: context,
@@ -48,7 +49,7 @@ class _TeamListPageState extends State<TeamListPage> {
               final name = _nameController.text.trim();
               if (name.isEmpty) return;
               if (isEdit) {
-                team!..name = name;
+                team.name = name;
                 await _service.updateTeam(team);
               } else {
                 await _service.addTeam(Team(name: name));
@@ -78,8 +79,8 @@ class _TeamListPageState extends State<TeamListPage> {
               Navigator.pop(context);
               _load();
             },
-            child: Text('Delete'),
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            child: Text('Delete'),
           ),
         ],
       ),
