@@ -24,4 +24,18 @@ class TeamService {
     final db = await DBProvider().database;
     return await db.delete('teams', where: 'id = ?', whereArgs: [id]);
   }
+
+  /// Fetch a single team by its ID
+  Future<Team?> getTeamById(int id) async {
+    final db = await DBProvider().database;
+    final res = await db.query(
+      'teams',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    if (res.isNotEmpty) {
+      return Team.fromMap(res.first);
+    }
+    return null;
+  }
 }
